@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Actividad Fundamental 06 - Programacion Web -->
+  <!-- Alumno: Juan Carlos Cortez Rico -->
+  <!-- Matricula: 2067285 -->
+  <!-- Carrera: Ingeniero Administrador de Sistemas -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AF06 Practicas profesionales - 3 empresas en LinkedIn">
+  <meta name="author" content="Juan Carlos Cortez Rico">
+  <title>Actividad Fundamental 06 - Practicas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: #f4f7f5;
+      color: #14324a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #1f7a4c; }
+
+    header {
+      background: #ffffff;
+      border-bottom: 3px solid #1f7a4c;
+    }
+
+    .barra-superior {
+      background: #14324a;
+      color: #d7e6f0;
+      font-size: 0.8rem;
+      padding: 0.4rem 1.5rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    nav {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 1rem 1.5rem;
+      padding: 0.9rem 1.5rem;
+    }
+
+    .marca-portal {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-fime-header {
+      width: 64px;
+      height: 64px;
+      background-color: #f3f7f4;
+      border: 2px solid #1f7a4c;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      overflow: hidden;
+    }
+
+    .logo-fime-header img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .titulo-marca h1 {
+      font-size: 1.25rem;
+      color: #14324a;
+      margin-bottom: 3px;
+    }
+
+    .titulo-marca p {
+      font-size: 0.85rem;
+      color: #4d6270;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #14324a;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: bold;
+      padding: 0.35rem 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: #1f7a4c;
+      color: #1f7a4c;
+    }
+
+    .btn-inicio-top {
+      display: inline-block;
+      padding: 0.55rem 1rem;
+      background-color: #1f7a4c;
+      color: #ffffff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.85rem;
+      border: 2px solid #1f7a4c;
+    }
+
+    .btn-inicio-top:hover {
+      background-color: #165c39;
+      border-color: #165c39;
+      color: #ffffff;
+    }
+
+    .seccion-hero {
+      text-align: center;
+      padding: 2.2rem 1.5rem 1.4rem;
+      background: #ffffff;
+      border-bottom: 1px solid #c9d6ce;
+    }
+
+    .seccion-hero h2 {
+      font-size: 2rem;
+      color: #14324a;
+      margin-bottom: 8px;
+    }
+
+    .seccion-hero p {
+      color: #4d6270;
+      font-size: 1rem;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    main {
+      padding: 1.5rem 1.5rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .intro-carrera {
+      background: #ffffff;
+      border: 2px solid #c9d6ce;
+      border-top: 3px solid #1f7a4c;
+      border-radius: 10px;
+      padding: 1.1rem 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .intro-carrera h3 {
+      margin-bottom: 0.45rem;
+      color: #14324a;
+    }
+
+    .intro-carrera p {
+      color: #4d6270;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .fila-empresas {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 22px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .fila-empresas > li {
+      flex: 1 1 280px;
+      max-width: 340px;
+      display: flex;
+    }
+
+    .fila-empresas .tarjeta-empresa {
+      width: 100%;
+      max-width: none;
+      flex: 1;
+    }
+
+    .tarjeta-empresa {
+      flex: 1 1 280px;
+      max-width: 340px;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 2px solid #c9d6ce;
+      padding: 1.6rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(20, 50, 74, 0.08);
+      position: relative;
+      transition: 0.2s;
+    }
+
+    .tarjeta-empresa:hover {
+      transform: translateY(-4px);
+      border-color: #1f7a4c;
+    }
+
+    .etiqueta-tipo {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #f3f7f4;
+      color: #1f7a4c;
+      font-size: 0.75rem;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid #c9d6ce;
+    }
+
+    .contenedor-imagen {
+      width: 100%;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 18px 0 12px;
+      background: #f3f7f4;
+      border: 1px solid #c9d6ce;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .contenedor-imagen img {
+      max-width: 180px;
+      max-height: 90px;
+      object-fit: contain;
+    }
+
+    .info-empresa h3 {
+      font-size: 1.2rem;
+      color: #14324a;
+      margin-bottom: 8px;
+    }
+
+    .info-empresa p {
+      font-size: 0.9rem;
+      color: #4d6270;
+      line-height: 1.45;
+      margin-bottom: 14px;
+      min-height: 70px;
+    }
+
+    .acciones-empresa {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .btn-alerta {
+      width: 100%;
+      padding: 11px;
+      background: #1f7a4c;
+      color: #ffffff;
+      border: 2px solid #1f7a4c;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .btn-alerta:hover {
+      background: #165c39;
+      border-color: #165c39;
+    }
+
+    .btn-enlace {
+      width: 100%;
+      padding: 10px;
+      background-color: #ffffff;
+      color: #14324a;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.88rem;
+      border: 2px solid #14324a;
+      display: block;
+    }
+
+    .btn-enlace:hover {
+      background-color: #f3f7f4;
+      color: #1f7a4c;
+      border-color: #1f7a4c;
+    }
+
+    .bloque-extra {
+      background: #ffffff;
+      border: 2px solid #c9d6ce;
+      border-top: 3px solid #1f7a4c;
+      border-radius: 10px;
+      padding: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .bloque-extra h2 {
+      color: #14324a;
+      font-size: 1.25rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .alertas-demo {
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .alerta {
+      padding: 0.75rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+    }
+
+    .alerta-info {
+      background: #eaf4ff;
+      border-color: #9fc0e0;
+      color: #14324a;
+    }
+
+    .alerta-ok {
+      background: #e8f6ef;
+      border-color: #9dceb4;
+      color: #165c39;
+    }
+
+    .alerta-aviso {
+      background: #fff4df;
+      border-color: #efc889;
+      color: #8a5a00;
+    }
+
+    .lista-dos {
+      columns: 2;
+      padding-left: 1.2rem;
+      color: #4d6270;
+      font-size: 0.9rem;
+    }
+
+    .lista-dos li {
+      margin-bottom: 0.35rem;
+      break-inside: avoid;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      margin-top: 0.4rem;
+    }
+
+    caption {
+      caption-side: bottom;
+      padding-top: 0.5rem;
+      color: #4d6270;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      border: 1px solid #c9d6ce;
+      padding: 0.55rem 0.7rem;
+      text-align: left;
+    }
+
+    thead th {
+      background: #14324a;
+      color: #fff;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f3f7f4;
+    }
+
+    details {
+      margin-top: 0.8rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+      color: #1f7a4c;
+    }
+
+    mark {
+      background: #fff3bf;
+      padding: 0 0.15rem;
+    }
+
+    abbr {
+      text-decoration: underline dotted;
+      cursor: help;
+    }
+
+    kbd {
+      background: #f3f7f4;
+      border: 1px solid #c9d6ce;
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-subir {
+      position: fixed;
+      right: 18px;
+      bottom: 22px;
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      background: #14324a;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #1f7a4c;
+      box-shadow: 0 6px 16px rgba(20, 50, 74, 0.25);
+      z-index: 100;
+    }
+
+    .btn-subir:hover { background: #1f7a4c; color: #fff; }
+
+    footer {
+      margin-top: auto;
+      background: #f4f7f5;
+      border-top: 3px solid #14324a;
+      color: #14324a;
+      padding: 1.5rem 1.5rem 1.2rem;
+    }
+
+    .pie-contenido {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1rem 2rem;
+    }
+
+    .pie-contenido h2 {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .pie-contenido p {
+      font-size: 0.9rem;
+      color: #4d6270;
+    }
+
+    address {
+      font-style: normal;
+      font-size: 0.88rem;
+      color: #4d6270;
+      line-height: 1.6;
+    }
+
+    address a { color: #1f7a4c; font-weight: bold; }
+
+    .pie-nota {
+      grid-column: 1 / -1;
+      border-top: 1px solid #c9d6ce;
+      padding-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #6a7b86;
+    }
+
+    @media (max-width: 800px) {
+      nav { grid-template-columns: 1fr; }
+      .nav-links { justify-content: flex-start; }
+      .pie-contenido { grid-template-columns: 1fr; }
+      .lista-dos { columns: 1; }
+      .titulo-marca h1 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="barra-superior">FIME UANL · Practicas profesionales para IAS</div>
+    <nav>
+      <div class="marca-portal">
+        <div class="logo-fime-header">
+          <img src="img/fime.png" alt="Logo FIME" width="48" height="48">
+        </div>
+        <div class="titulo-marca">
+          <h1>AF06 · Empresas para practicas</h1>
+          <p>Juan Carlos Cortez Rico · 2067285</p>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#empresas">Empresas</a>
+        <a href="#estilos">Estilos</a>
+        <a href="#etiquetas">Etiquetas</a>
+        <a href="https://m3nny75.github.io/Pia-Progra-web/" class="btn-inicio-top">Ir al portafolio</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="seccion-hero" id="inicio">
+    <h2>Empresas objetivo para practicas</h2>
+    <p>
+      Seleccione una empresa para revisar por que me interesa y abra su perfil en
+      <strong>LinkedIn</strong>. Esta lista es para la carrera de
+      <em>Ingeniero Administrador de Sistemas</em> en <abbr title="Facultad de Ingenieria Mecanica y Electrica">FIME</abbr>.
+    </p>
+  </section>
+
+  <main>
+    <aside class="intro-carrera">
+      <h3>Perfil academico</h3>
+      <p>
+        Soy alumno de <mark>Ingeniero Administrador de Sistemas</mark> y busco practicas en
+        areas de <strong>TI</strong>, soporte, infraestructura, plataformas y operaciones digitales.
+        Las 3 empresas siguientes aparecen en LinkedIn y ofrecen oportunidades alineadas a mi carrera.
+      </p>
+    </aside>
+
+    <section id="empresas" aria-labelledby="lista-title">
+      <h2 id="lista-title" style="margin-bottom:1rem;color:#14324a;">Lista de 3 empresas (LinkedIn)</h2>
+
+      <ol class="fila-empresas">
+        <li>
+          <article class="tarjeta-empresa">
+            <span class="etiqueta-tipo">1 · Softtek</span>
+            <figure class="contenedor-imagen">
+              <img src="img/softtek.svg" alt="Logo Softtek" width="180" height="90">
+              <figcaption style="display:none;">Softtek</figcaption>
+            </figure>
+            <div class="info-empresa">
+              <h3>Softtek</h3>
+              <p>
+                Empresa global de servicios de <strong>TI</strong> con sede en Monterrey.
+                Ideal para practicas en soporte, desarrollo, nube y administracion de sistemas.
+              </p>
+            </div>
+            <div class="acciones-empresa">
+              <button
+                type="button"
+                class="btn-alerta"
+                onclick="lanzarAlerta('Softtek', 'Por que la elegi:\n- Empresa de TI con presencia fuerte en NL\n- Perfiles de Ingeniero Administrador de Sistemas\n- Practicas en soporte, plataformas y operaciones\n\nLinkedIn: company/softtek')">
+                Ver por que la elegi
+              </button>
+              <a
+                class="btn-enlace"
+                href="https://www.linkedin.com/company/softtek"
+                target="_blank"
+                rel="noopener noreferrer">
+                Abrir en LinkedIn
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="tarjeta-empresa">
+            <span class="etiqueta-tipo">2 · CEMEX</span>
+            <figure class="contenedor-imagen">
+              <img src="img/cemex.svg" alt="Logo CEMEX" width="180" height="90">
+            </figure>
+            <div class="info-empresa">
+              <h3>CEMEX</h3>
+              <p>
+                Multinacional con practicas de <em>tecnologias de la informacion</em> en Monterrey:
+                soporte a plataformas, reportes y operaciones digitales.
+              </p>
+            </div>
+            <div class="acciones-empresa">
+              <button
+                type="button"
+                class="btn-alerta"
+                onclick="lanzarAlerta('CEMEX', 'Por que la elegi:\n- Publica practicas de TI en Monterrey\n- Experiencia en empresas grandes e infraestructura\n- Aprendizaje en procesos globales y sistemas empresariales\n\nLinkedIn: company/cemex')">
+                Ver por que la elegi
+              </button>
+              <a
+                class="btn-enlace"
+                href="https://www.linkedin.com/company/cemex"
+                target="_blank"
+                rel="noopener noreferrer">
+                Abrir en LinkedIn
+              </a>
+            </div>
+          </article>
+        </li>
+
+        <li>
+          <article class="tarjeta-empresa">
+            <span class="etiqueta-tipo">3 · FEMSA</span>
+            <figure class="contenedor-imagen">
+              <img src="img/femsa.svg" alt="Logo FEMSA" width="180" height="90">
+            </figure>
+            <div class="info-empresa">
+              <h3>FEMSA</h3>
+              <p>
+                Grupo con vacantes de <strong>Practicante de IT</strong> y control interno de tecnologia.
+                Buena opcion para practicas en sistemas, soporte y operaciones de negocio.
+              </p>
+            </div>
+            <div class="acciones-empresa">
+              <button
+                type="button"
+                class="btn-alerta"
+                onclick="lanzarAlerta('FEMSA', 'Por que la elegi:\n- Ofertas de practicante IT en Monterrey\n- Ambiente corporativo con sistemas de gran escala\n- Relacion directa con operaciones y tecnologia\n\nLinkedIn: company/femsa')">
+                Ver por que la elegi
+              </button>
+              <a
+                class="btn-enlace"
+                href="https://www.linkedin.com/company/femsa"
+                target="_blank"
+                rel="noopener noreferrer">
+                Abrir en LinkedIn
+              </a>
+            </div>
+          </article>
+        </li>
+      </ol>
+    </section>
+
+    <aside class="bloque-extra" id="comparativa">
+      <h2>Comparativa rapida</h2>
+      <table>
+        <caption>Tres empresas objetivo para practicas de Ingeniero Administrador de Sistemas</caption>
+        <thead>
+          <tr>
+            <th scope="col">Empresa</th>
+            <th scope="col">Enfoque</th>
+            <th scope="col">LinkedIn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Softtek</th>
+            <td>Servicios de TI / sistemas</td>
+            <td><a href="https://www.linkedin.com/company/softtek" target="_blank" rel="noopener noreferrer">company/softtek</a></td>
+          </tr>
+          <tr>
+            <th scope="row">CEMEX</th>
+            <td>TI corporativa / plataformas</td>
+            <td><a href="https://www.linkedin.com/company/cemex" target="_blank" rel="noopener noreferrer">company/cemex</a></td>
+          </tr>
+          <tr>
+            <th scope="row">FEMSA</th>
+            <td>Practicante IT / operaciones</td>
+            <td><a href="https://www.linkedin.com/company/femsa" target="_blank" rel="noopener noreferrer">company/femsa</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.7rem;color:#4d6270;font-size:0.9rem;">
+        Tip: en LinkedIn use filtros de <kbd>Practicas</kbd> + <kbd>Monterrey</kbd> + <kbd>Tecnologia</kbd>.
+      </p>
+    </aside>
+
+    <section class="bloque-extra" id="alertas">
+      <h2>Alertas</h2>
+      <div class="alertas-demo">
+        <div class="alerta alerta-info" role="status">
+          <strong>Info:</strong> Los botones verdes abren una alerta con el motivo de cada empresa.
+        </div>
+        <div class="alerta alerta-ok" role="status">
+          <strong>Listo:</strong> Los hipervinculos llevan al perfil oficial de LinkedIn.
+        </div>
+        <div class="alerta alerta-aviso" role="alert">
+          <strong>Aviso:</strong> Las vacantes cambian; revise siempre la publicacion vigente en LinkedIn.
+        </div>
+      </div>
+      <p style="margin-top:0.8rem;">
+        <label for="empresa-select"><strong>Probar alerta interactiva:</strong></label>
+        <select id="empresa-select" name="empresa">
+          <option value="">Seleccione empresa</option>
+          <option value="Softtek">Softtek</option>
+          <option value="CEMEX">CEMEX</option>
+          <option value="FEMSA">FEMSA</option>
+        </select>
+        <button type="button" class="btn-alerta" style="width:auto;margin-left:0.5rem;padding:0.45rem 0.9rem;" id="btn-probar">Mostrar alerta</button>
+      </p>
+    </section>
+
+    <section class="bloque-extra" id="estilos">
+      <h2>Estilos CSS usados</h2>
+      <ul class="lista-dos">
+        <li><code>color</code></li>
+        <li><code>background</code> / <code>background-color</code></li>
+        <li><code>font-family</code>, <code>font-size</code>, <code>font-weight</code></li>
+        <li><code>margin</code> y <code>padding</code></li>
+        <li><code>display: flex</code> / <code>display: grid</code></li>
+        <li><code>gap</code>, <code>align-items</code>, <code>justify-content</code></li>
+        <li><code>width</code>, <code>max-width</code>, <code>min-height</code></li>
+        <li><code>border</code>, <code>border-radius</code></li>
+        <li><code>box-shadow</code></li>
+        <li><code>text-align</code>, <code>text-decoration</code></li>
+        <li><code>position</code>, <code>top</code>, <code>right</code>, <code>bottom</code></li>
+        <li><code>transition</code> y <code>transform</code></li>
+        <li><code>object-fit</code></li>
+        <li><code>columns</code></li>
+        <li><code>list-style</code></li>
+        <li><code>@media</code></li>
+      </ul>
+    </section>
+
+    <section class="bloque-extra" id="etiquetas">
+      <h2>25 etiquetas HTML usadas</h2>
+      <ol class="lista-dos" start="1">
+        <li><code>&lt;header&gt;</code></li>
+        <li><code>&lt;nav&gt;</code></li>
+        <li><code>&lt;main&gt;</code></li>
+        <li><code>&lt;section&gt;</code></li>
+        <li><code>&lt;article&gt;</code> (contenido en tarjetas)</li>
+        <li><code>&lt;aside&gt;</code></li>
+        <li><code>&lt;footer&gt;</code></li>
+        <li><code>&lt;figure&gt;</code></li>
+        <li><code>&lt;figcaption&gt;</code></li>
+        <li><code>&lt;img&gt;</code></li>
+        <li><code>&lt;ol&gt;</code> / <code>&lt;ul&gt;</code> / <code>&lt;li&gt;</code></li>
+        <li><code>&lt;table&gt;</code></li>
+        <li><code>&lt;thead&gt;</code></li>
+        <li><code>&lt;tbody&gt;</code></li>
+        <li><code>&lt;caption&gt;</code></li>
+        <li><code>&lt;button&gt;</code></li>
+        <li><code>&lt;a&gt;</code></li>
+        <li><code>&lt;strong&gt;</code> / <code>&lt;em&gt;</code></li>
+        <li><code>&lt;mark&gt;</code></li>
+        <li><code>&lt;abbr&gt;</code></li>
+        <li><code>&lt;code&gt;</code> / <code>&lt;kbd&gt;</code></li>
+        <li><code>&lt;label&gt;</code> / <code>&lt;select&gt;</code> / <code>&lt;option&gt;</code></li>
+        <li><code>&lt;details&gt;</code> / <code>&lt;summary&gt;</code></li>
+        <li><code>&lt;time&gt;</code></li>
+        <li><code>&lt;address&gt;</code></li>
+      </ol>
+
+      <details>
+        <summary>Mas recursos de busqueda</summary>
+        <p style="margin-top:0.5rem;color:#4d6270;">
+          Tambien puede revisar vacantes en
+          <a href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener noreferrer">LinkedIn Jobs</a>
+          y la bolsa de
+          <a href="https://www.fime.uanl.mx/" target="_blank" rel="noopener noreferrer">FIME</a>.
+          Actualizado: <time datetime="2026-11-11">11 de noviembre de 2026</time>.
+        </p>
+      </details>
+    </section>
+  </main>
+
+  <a href="#inicio" class="btn-subir" title="Subir al inicio" aria-label="Subir al inicio"><span>↑</span></a>
+
+  <footer>
+    <div class="pie-contenido">
+      <div>
+        <h2>AF06 · Programacion Web</h2>
+        <p>Lista de 3 empresas en LinkedIn para practicas profesionales de Ingeniero Administrador de Sistemas.</p>
+      </div>
+      <address>
+        Alumno: Juan Carlos Cortez Rico<br>
+        Matricula: 2067285<br>
+        Carrera: Ingeniero Administrador de Sistemas<br>
+        Facultad: <a href="https://www.fime.uanl.mx/" target="_blank" rel="noopener noreferrer">FIME UANL</a>
+      </address>
+      <p class="pie-nota">Informacion orientativa. Verifique vacantes vigentes directamente en LinkedIn.</p>
+    </div>
+  </footer>
+
+  <script>
+    function lanzarAlerta(titulo, mensaje) {
+      window.alert(titulo + "\n\n" + mensaje);
+    }
+
+    document.getElementById("btn-probar").addEventListener("click", function () {
+      var empresa = document.getElementById("empresa-select").value;
+      if (!empresa) {
+        window.alert("Seleccione una empresa de la lista.");
+        return;
+      }
+      window.alert("Empresa seleccionada: " + empresa + "\nAbra su perfil en LinkedIn con el boton de la tarjeta.");
+    });
+  </script>
+</body>
+</html>
